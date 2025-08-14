@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meine Landingpage</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a1a1a, #333, #0078d7);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            color: white;
+            text-align: center;
+        }
+
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        header {
+            padding: 3rem 1rem 2rem 1rem;
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-weight: 400;
+            color: #ddd;
+        }
+
+        img {
+            margin-top: 30px;
+            max-width: 85%;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {opacity: 0; transform: translateY(40px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin: 25px auto;
+            width: 80%;
+            max-width: 700px;
+            color: #f0f0f0;
+            animation: fadeIn 2.2s ease-out;
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #ffcc70);
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: fadeInUp 2.5s ease-out;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Willkommen auf meiner Landingpage</h1>
+        <h2>Modern, minimalistisch und mit Animation</h2>
+    </header>
+
+    <img src="https://via.placeholder.com/900x400.png?text=Mein+Landingpage+Bild" alt="Landingpage Bild">
+
+    <p>Diese Seite ist ein Beispiel dafür, wie man mit reinem HTML, CSS und etwas JavaScript 
+       eine moderne und ansprechende Landingpage erstellen kann – ganz ohne externe Tools.</p>
+
+    <button onclick="begruesse()">Klick mich!</button>
+
+    <footer>
+        &copy; 2025 Volkmar Blank – Erstellt mit ❤️ und ChatGPT
+    </footer>
+
+    <script>
+        function begruesse() {
+            alert("Hallo Volkmar! Schön, dass du hier bist!");
+        }
+    </script>
+
+</body>
+</html>
