@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meine Landingpage – mit eigenem Bild</title>
+  <style>
+    :root { --fg:#fff; --fg-dim:#e7e7e7; --card:#111418; --accent:#ff6b6b; --accent2:#ffcc70; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: system-ui, Segoe UI, Roboto, Arial, sans-serif; color: var(--fg);
+      background: linear-gradient(135deg, #1a1a1a, #2a2f36, #0078d7); background-size: 400% 400%;
+      animation: bgmove 16s ease infinite; text-align: center; min-height: 100dvh;
+      display: grid; grid-template-rows: auto 1fr auto;
+    }
+    @keyframes bgmove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+    header { padding: 3rem 1rem 1rem; }
+    h1 { margin: 0 0 .25rem; font-size: clamp(1.8rem, 3.5vw, 3rem); }
+    h2 { margin: 0; font-weight: 400; color: var(--fg-dim); }
+
+    .container { width: min(1100px, 92%); margin: 2rem auto; }
+
+    .card { background: rgba(17,20,24,.65); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 1rem; box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      animation: fadeInUp .9s ease; }
+
+    @keyframes fadeInUp { from{opacity:0; transform: translateY(20px)} to{opacity:1; transform: translateY(0)} }
+
+    .hero-img { width: 100%; max-height: 460px; object-fit: cover; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+
+    p.lead { color: var(--fg-dim); margin: 1rem auto 1.25rem; max-width: 720px; }
+
+    .controls { display: grid; gap: .75rem; grid-template-columns: 1fr; margin: 1rem auto; width: min(840px, 100%); }
+
+    .row { display: grid; gap: .75rem; grid-template-columns: 1fr auto; }
+
+    input[type="url"], input[type="text"] {
+      width: 100%; padding: .85rem 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,.12);
+      background: #0f1317; color: var(--fg); outline: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    .btn { cursor: pointer; border: 0; padding: .9rem 1.1rem; border-radius: 10px; color: #111; font-weight: 700; letter-spacing: .2px;
+      background: linear-gradient(45deg, var(--accent), var(--accent2)); box-shadow: 0 10px 22px rgba(0,0,0,.35); transition: transform .15s ease, box-shadow .15s ease; }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 14px 26px rgba(0,0,0,.45); }
+
+    .uploader { border: 2px dashed rgba(255,255,255,.2); border-radius: 12px; padding: 1rem; color: var(--fg-dim); }
+    .uploader.drag { border-color: var(--accent2); background: rgba(255, 204, 112, .04); }
+
+    .footer { color: #cfcfcf; padding: 1rem; font-size: .95rem; }
+    .meta { font-size: .9rem; color: #c9d2dc; opacity: .9; margin-top: .5rem; }
+
+    @media (min-width: 700px) {
+      .controls { grid-template-columns: 1fr 1fr; }
+      .uploader { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Willkommen auf meiner Landingpage</h1>
+    <h2>Mit animiertem Hintergrund – und eigenem Bild</h2>
+  </header>
+
+  <main class="container">
+    <section class="card" aria-label="Hero">
+      <!-- Standardbild: einfach ersetzen oder per Upload/URL tauschen -->
+      <img id="hero" class="hero-img" src="https://via.placeholder.com/1200x500.png?text=Dein+Bild+hier" alt="Hero-Bild" />
+      <p class="lead">Du kannst unten entweder eine Bild-URL einfügen <em>oder</em> eine Datei vom Computer auswählen/ziehen. Das Bild wird sofort hier oben angezeigt – ohne externes Hosting.</p>
+
+      <div class="controls">
+        <div class="row">
+          <input id="urlInput" type="url" placeholder="Bild-URL einfügen (https://...)" aria-label="Bild-URL" />
+          <button class="btn" id="applyUrl">URL übernehmen</button>
+        </div>
+
+        <div class="uploader" id="dropzone" aria-label="Bild hochladen (Drag & Drop)">
+          <input id="fileInput" type="file" accept="image/*" style="display:none" />
+          <p><strong>Datei hierher ziehen</strong> oder <button class="btn" id="pickFile" type="button">Datei auswählen</button></p>
+          <div class="meta" id="meta">Unterstützt: JPG, PNG, GIF, WEBP • max. ~15 MB (browserabhängig)</div>
+        </div>
+
+        <div class="row">
+          <input id="altInput" type="text" placeholder="Alt-Text (Barrierefreiheit, z.B. 'Sonnenuntergang über Magdeburg')" aria-label="Alt-Text" />
+          <button class="btn" id="applyAlt">Alt-Text setzen</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">© 2025 Volkmar Blank — Erstellt mit ❤️ und ChatGPT</footer>
+
+  <script>
+    const img = document.getElementById('hero');
+    const urlInput = document.getElementById('urlInput');
+    const applyUrlBtn = document.getElementById('applyUrl');
+    const fileInput = document.getElementById('fileInput');
+    const pickFileBtn = document.getElementById('pickFile');
+    const dropzone = document.getElementById('dropzone');
+    const altInput = document.getElementById('altInput');
+    const applyAltBtn = document.getElementById('applyAlt');
+    const meta = document.getElementById('meta');
+
+    // Wiederherstellen der letzten Bild-URL aus localStorage
+    const lastUrl = localStorage.getItem('hero:url');
+    if (lastUrl) { img.src = lastUrl; urlInput.value = lastUrl; }
+
+    function setImageSrc(src) {
+      img.src = src;
+      localStorage.setItem('hero:url', src);
+    }
+
+    function isValidUrl(s) {
+      try { new URL(s); return true; } catch { return false; }
+    }
+
+    applyUrlBtn.addEventListener('click', () => {
+      const val = urlInput.value.trim();
+      if (!val) { alert('Bitte eine Bild-URL eingeben.'); return; }
+      if (!isValidUrl(val)) { alert('Das sieht nicht wie eine gültige URL aus.'); return; }
+      setImageSrc(val);
+    });
+
+    pickFileBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+    function handleFiles(files) {
+      if (!files || !files.length) return;
+      const f = files[0];
+      if (!f.type.startsWith('image/')) { alert('Bitte eine Bilddatei wählen.'); return; }
+      const max = 15 * 1024 * 1024; // 15 MB
+      if (f.size > max) { alert('Datei ist zu groß (max. ca. 15 MB).'); return; }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageSrc(reader.result); // data URL, bleibt lokal
+        meta.textContent = `${f.name} • ${(f.size/1024/1024).toFixed(2)} MB`;
+      };
+      reader.readAsDataURL(f);
+    }
+
+    // Drag & Drop
+    ['dragenter','dragover'].forEach(ev => dropzone.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('drag'); }));
+    ;['dragleave','dragend','drop'].forEach(ev => dropzone.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('drag'); }));
+    dropzone.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
+
+    // Alt-Text
+    applyAltBtn.addEventListener('click', ()=> {
+      const val = altInput.value.trim();
+      if (!val) { alert('Bitte einen Alt-Text eingeben.'); return; }
+      img.alt = val;
+      localStorage.setItem('hero:alt', val);
+    });
+    // Alt-Text wiederherstellen
+    const lastAlt = localStorage.getItem('hero:alt');
+    if (lastAlt) { img.alt = lastAlt; altInput.value = lastAlt; }
+  </script>
+</body>
+</html>
+
